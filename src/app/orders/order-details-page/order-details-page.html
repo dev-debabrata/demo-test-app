@@ -197,7 +197,7 @@
             <span class="dropdown-caret">▼</span>
           </div>
 
-          <!-- Dropdown Options Menu (as seen in screenshot 2) -->
+          <!-- Dropdown Options Menu -->
           @if (isBoxDropdownOpen()) {
             <div class="dropdown-menu-list">
               @for (boxOption of boxOptions; track boxOption) {
@@ -215,7 +215,7 @@
 
         <!-- Length Input -->
         <div class="dim-input-group" [class.has-error]="showValidationErrors()">
-          <label class="dim-label">Length (in) {{ showValidationErrors() ? '*' : '' }}</label>
+          <label class="dim-label">Length (in){{ showValidationErrors() ? '*' : '' }}</label>
           <input
             type="number"
             class="dim-input"
@@ -229,7 +229,7 @@
 
         <!-- Width Input -->
         <div class="dim-input-group" [class.has-error]="showValidationErrors()">
-          <label class="dim-label">Width (in) {{ showValidationErrors() ? '*' : '' }}</label>
+          <label class="dim-label">Width (in){{ showValidationErrors() ? '*' : '' }}</label>
           <input
             type="number"
             class="dim-input"
@@ -243,7 +243,7 @@
 
         <!-- Height Input -->
         <div class="dim-input-group" [class.has-error]="showValidationErrors()">
-          <label class="dim-label">Height (in) {{ showValidationErrors() ? '*' : '' }}</label>
+          <label class="dim-label">Height (in){{ showValidationErrors() ? '*' : '' }}</label>
           <input
             type="number"
             class="dim-input"
@@ -257,7 +257,7 @@
 
         <!-- Weight Input -->
         <div class="dim-input-group" [class.has-error]="showValidationErrors()">
-          <label class="dim-label">Weight (lbs) {{ showValidationErrors() ? '*' : '' }}</label>
+          <label class="dim-label">Weight (lbs){{ showValidationErrors() ? '*' : '' }}</label>
           <input
             type="number"
             class="dim-input"
@@ -277,7 +277,7 @@
             <tr>
               <th class="th-num">#</th>
               <th class="th-check">
-                <input type="checkbox" checked />
+                <input type="checkbox" checked class="blue-checkbox" />
               </th>
               <th class="th-product">Product Name</th>
               <th class="th-sku">SKU</th>
@@ -295,6 +295,7 @@
                 <td class="td-check">
                   <input
                     type="checkbox"
+                    class="blue-checkbox"
                     [checked]="item.selected !== false"
                     (change)="toggleItemSelection(item)"
                   />
@@ -305,15 +306,15 @@
                 <td class="td-sku text-red">
                   {{ item.sku || '2008756' }}
                 </td>
-                <td class="td-qty">{{ item.qtyOrdered || item.quantity || 1 }}</td>
-                <td class="td-qty">{{ item.qtyPicked || item.quantity || 1 }}</td>
+                <td class="td-qty">{{ item.qtyOrdered || item.quantity || 7 }}</td>
+                <td class="td-qty">{{ item.qtyPicked || item.quantity || 5 }}</td>
                 <td class="td-qty">{{ item.qtyShipped || 0 }}</td>
-                <td class="td-qty">{{ item.labelPrintedFor || 0 }}</td>
+                <td class="td-qty">{{ item.labelPrintedFor || 3 }}</td>
                 <td class="td-qty-shipping">
                   <input
                     type="number"
                     class="qty-shipping-input"
-                    [value]="item.qtyShipping !== undefined ? item.qtyShipping : 1"
+                    [value]="item.qtyShipping !== undefined ? item.qtyShipping : 3"
                     (input)="item.qtyShipping = +$any($event.target).value"
                   />
                 </td>
@@ -333,25 +334,16 @@
         >
           Void Shipping
         </button>
-        @if (!showValidationErrors()) {
-          <button class="btn-outline-red" (click)="onReprintLabel()">Reprint Label</button>
-        }
+        <button class="btn-outline-red" (click)="onReprintLabel()">Reprint Label</button>
       </div>
 
       <!-- Bottom Action Bar -->
       <div class="bottom-action-bar">
         <div class="bottom-left-action">
-          @if (o.canRefund) {
-            <button class="btn-void-order" (click)="onRefundOrder()">
-              <span class="void-x-icon">✖</span>
-              <span>Refund Order</span>
-            </button>
-          } @else {
-            <button class="btn-void-order" (click)="onVoidOrder()">
-              <span class="void-x-icon">✖</span>
-              <span>Void Order</span>
-            </button>
-          }
+          <button class="btn-void-order" (click)="onVoidOrder()">
+            <span class="void-x-icon">✕</span>
+            <span>Void Order</span>
+          </button>
         </div>
 
         <div class="bottom-right-action">

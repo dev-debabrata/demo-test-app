@@ -2,7 +2,7 @@
   "orders": [
     {
       "id": "000055807-3",
-      "orderNumber": "000055807-3",
+      "orderNumber": "000055807",
       "status": "Packing",
       "customerName": "Utkarsh Chaudhary",
       "altPickPerson": "N/A",
@@ -80,7 +80,7 @@
       },
       "selectedBox": "Custom Box",
       "itemsCount": 4,
-      "totalAmount": 154.00,
+      "totalAmount": 154.0,
       "paymentStatus": "Paid",
       "paymentMethod": "Credit Card",
       "canVoid": false,
@@ -104,7 +104,7 @@
           "labelPrintedFor": 0,
           "qtyShipping": 1,
           "quantity": 4,
-          "price": 38.50
+          "price": 38.5
         }
       ]
     },
@@ -134,7 +134,7 @@
       },
       "selectedBox": "Poly Bag - Medium",
       "itemsCount": 2,
-      "totalAmount": 189.50,
+      "totalAmount": 189.5,
       "paymentStatus": "Paid",
       "paymentMethod": "PayPal",
       "canVoid": false,
@@ -158,7 +158,7 @@
           "labelPrintedFor": 1,
           "qtyShipping": 0,
           "quantity": 1,
-          "price": 159.50
+          "price": 159.5
         }
       ]
     },
@@ -188,7 +188,7 @@
       },
       "selectedBox": "Large Feed Box",
       "itemsCount": 8,
-      "totalAmount": 2840.00,
+      "totalAmount": 2840.0,
       "paymentStatus": "Paid",
       "paymentMethod": "Credit Card",
       "canVoid": false,
@@ -212,7 +212,7 @@
           "labelPrintedFor": 8,
           "qtyShipping": 0,
           "quantity": 8,
-          "price": 355.00
+          "price": 355.0
         }
       ]
     }

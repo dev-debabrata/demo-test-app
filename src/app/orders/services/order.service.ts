@@ -4,7 +4,7 @@ import { Observable, catchError, of, throwError } from 'rxjs';
 import { Order, OrderStatus } from '../models/order.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderService {
   private readonly http = inject(HttpClient);
@@ -13,7 +13,7 @@ export class OrderService {
   private readonly fallbackOrders: Order[] = [
     {
       id: '000055807-3',
-      orderNumber: '000055807-3',
+      orderNumber: '000055807',
       status: 'Packing',
       customerName: 'Utkarsh Chaudhary',
       altPickPerson: 'N/A',
@@ -33,7 +33,7 @@ export class OrderService {
         length: 28,
         width: 6,
         height: 20,
-        weight: 73.5
+        weight: 73.5,
       },
       selectedBox: 'Custom Box',
       itemsCount: 7,
@@ -46,7 +46,7 @@ export class OrderService {
         street: '159 10th Avenue North',
         city: 'Twin Falls',
         state: 'Idaho',
-        zipCode: '83301'
+        zipCode: '83301',
       },
       items: [
         {
@@ -61,9 +61,9 @@ export class OrderService {
           labelPrintedFor: 3,
           qtyShipping: 3,
           quantity: 7,
-          price: 45.99
-        }
-      ]
+          price: 45.99,
+        },
+      ],
     },
     {
       id: '000055411',
@@ -87,11 +87,11 @@ export class OrderService {
         length: 28,
         width: 5,
         height: 26,
-        weight: 16
+        weight: 16,
       },
       selectedBox: 'Custom Box',
       itemsCount: 4,
-      totalAmount: 154.00,
+      totalAmount: 154.0,
       paymentStatus: 'Paid',
       paymentMethod: 'Credit Card',
       canVoid: false,
@@ -100,7 +100,7 @@ export class OrderService {
         street: '1312 North Homedale Avenue',
         city: 'Caldwell',
         state: 'Idaho',
-        zipCode: '83605'
+        zipCode: '83605',
       },
       items: [
         {
@@ -115,9 +115,9 @@ export class OrderService {
           labelPrintedFor: 0,
           qtyShipping: 1,
           quantity: 4,
-          price: 38.50
-        }
-      ]
+          price: 38.5,
+        },
+      ],
     },
     {
       id: '000055812',
@@ -141,11 +141,11 @@ export class OrderService {
         length: 18,
         width: 12,
         height: 10,
-        weight: 22.4
+        weight: 22.4,
       },
       selectedBox: 'Poly Bag - Medium',
       itemsCount: 2,
-      totalAmount: 189.50,
+      totalAmount: 189.5,
       paymentStatus: 'Paid',
       paymentMethod: 'PayPal',
       canVoid: false,
@@ -154,7 +154,7 @@ export class OrderService {
         street: '402 Pine Meadow Way',
         city: 'Ontario',
         state: 'Oregon',
-        zipCode: '97914'
+        zipCode: '97914',
       },
       items: [
         {
@@ -169,55 +169,67 @@ export class OrderService {
           labelPrintedFor: 1,
           qtyShipping: 0,
           quantity: 1,
-          price: 159.50
-        }
-      ]
-    }
+          price: 159.5,
+        },
+      ],
+    },
   ];
 
   getOrders(): Observable<Order[]> {
     return this.http.get<Order[]>(this.apiUrl).pipe(
       catchError((error) => {
-        console.warn('Could not connect to json-server at ' + this.apiUrl + '. Using fallback orders data.', error);
+        console.warn(
+          'Could not connect to json-server at ' + this.apiUrl + '. Using fallback orders data.',
+          error,
+        );
         return of(this.fallbackOrders);
-      })
+      }),
     );
   }
 
   getOrderById(id: string): Observable<Order | undefined> {
     return this.http.get<Order>(`${this.apiUrl}/${id}`).pipe(
       catchError((error) => {
-        console.warn(`Could not fetch order ${id} from json-server. Looking up in fallback data.`, error);
+        console.warn(
+          `Could not fetch order ${id} from json-server. Looking up in fallback data.`,
+          error,
+        );
         const fallback = this.fallbackOrders.find((o) => o.id === id || o.orderNumber === id);
         return of(fallback);
-      })
+      }),
     );
   }
 
   updateOrderStatus(id: string, status: OrderStatus): Observable<Order> {
     return this.http.patch<Order>(`${this.apiUrl}/${id}`, { status }).pipe(
       catchError((error) => {
-        console.warn(`Could not update order ${id} on json-server. Updating local fallback state.`, error);
+        console.warn(
+          `Could not update order ${id} on json-server. Updating local fallback state.`,
+          error,
+        );
         const order = this.fallbackOrders.find((o) => o.id === id);
         if (order) {
           order.status = status;
           return of(order);
         }
         return throwError(() => error);
-      })
+      }),
     );
   }
 
   deleteOrder(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
       catchError((error) => {
-        console.warn(`Could not delete order ${id} on json-server. Removing from local fallback.`, error);
+        console.warn(
+          `Could not delete order ${id} on json-server. Removing from local fallback.`,
+          error,
+        );
         const index = this.fallbackOrders.findIndex((o) => o.id === id);
         if (index > -1) {
           this.fallbackOrders.splice(index, 1);
         }
         return of(void 0);
-      })
+      }),
     );
   }
 }
