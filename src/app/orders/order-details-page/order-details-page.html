@@ -1,1 +1,357 @@
-<p>order-details-page works!</p>
+<div class="order-detail-page-wrapper">
+  <!-- Loading Spinner -->
+  @if (isLoading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="44"></mat-spinner>
+      <p>Loading order details...</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @if (!isLoading() && errorMessage()) {
+    <div class="error-container">
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <h2>{{ errorMessage() }}</h2>
+      <button class="btn-back-link" (click)="backToOrders()">Return to Orders</button>
+    </div>
+  }
+
+  <!-- Toast Notification -->
+  @if (toastMessage()) {
+    <div class="toast-notification">
+      <span>{{ toastMessage() }}</span>
+    </div>
+  }
+
+  <!-- Main Content When Order Loaded -->
+  @if (!isLoading() && order(); as o) {
+    <!-- TOP BAR -->
+    <div class="top-nav-card">
+      <div class="top-nav-left">
+        <div class="order-icon-badge">
+          <svg class="order-store-svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M4 4h16v3H4V4zm0 5h16v11H4V9zm2 2v7h3v-7H6zm5 0v7h2v-7h-2zm4 0v7h3v-7h-3z"/>
+          </svg>
+        </div>
+        <h1 class="order-number-heading">Order # {{ o.orderNumber }}</h1>
+        <span class="status-packing-pill">{{ o.status }}</span>
+      </div>
+
+      <div class="top-nav-right">
+        <button class="nav-arrow-btn" (click)="prevOrder()" title="Previous Order">&lt;</button>
+        <button class="nav-arrow-btn" (click)="nextOrder()" title="Next Order">&gt;</button>
+        <button class="nav-back-btn" (click)="backToOrders()">Back</button>
+      </div>
+    </div>
+
+    <!-- 4-PANEL INFO GRID -->
+    <div class="info-panels-grid">
+      <!-- 1. Billing Address Panel -->
+      <div class="info-panel">
+        <h3 class="panel-heading">Billing Address</h3>
+        <table class="panel-table">
+          <tbody>
+            <tr>
+              <td class="col-label">Name</td>
+              <td class="col-value">{{ o.customerName }}</td>
+            </tr>
+            <tr>
+              <td class="col-label">Alt Pick Person</td>
+              <td class="col-value">{{ o.altPickPerson || 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td class="col-label">Street Name</td>
+              <td class="col-value">{{ o.streetName || o.shippingAddress?.street || 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td class="col-label">City, State, Zip Code</td>
+              <td class="col-value">{{ o.cityStateZip || (o.shippingAddress?.city + ', ' + o.shippingAddress?.state + ', ' + o.shippingAddress?.zipCode) }}</td>
+            </tr>
+            <tr>
+              <td class="col-label">Mobile Number</td>
+              <td class="col-value">{{ o.customerPhone || 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td class="col-label">Email Address</td>
+              <td class="col-value email-value">{{ o.customerEmail }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 2. Order Information Panel -->
+      <div class="info-panel">
+        <h3 class="panel-heading">Order Information</h3>
+        <table class="panel-table">
+          <tbody>
+            <tr>
+              <td class="col-label">Order Id</td>
+              <td class="col-value">{{ o.orderNumber }}</td>
+            </tr>
+            <tr>
+              <td class="col-label">Store</td>
+              <td class="col-value">{{ o.store || '#800 Distribution Center' }}</td>
+            </tr>
+            <tr>
+              <td class="col-label">Order Type</td>
+              <td class="col-value">{{ o.orderType || 'Ship to Home' }}</td>
+            </tr>
+            <tr>
+              <td class="col-label">Order Date</td>
+              <td class="col-value">{{ o.orderDate }}</td>
+            </tr>
+            <tr>
+              <td class="col-label">Status</td>
+              <td class="col-value">
+                <span class="status-packing-pill small-pill">{{ o.status }}</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="col-label">Signifyd Guarantee</td>
+              <td class="col-value font-semibold">{{ o.signifydGuarantee || 'ACCEPT' }}</td>
+            </tr>
+            <tr>
+              <td class="col-label">Signifyd Score</td>
+              <td class="col-value">{{ o.signifydScore || 995 }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 3. Transactions Panel -->
+      <div class="info-panel">
+        <h3 class="panel-heading">Transactions</h3>
+        <div class="transactions-list">
+          <a class="transaction-link" (click)="showToast('Opening Deposit Transaction details...')">Deposit Transaction</a>
+          <a class="transaction-link" (click)="showToast('Opening Sales Transaction details...')">Sales Transaction</a>
+          <a class="transaction-link" (click)="showToast('Opening Refund Deposit Transaction details...')">Refund Deposit Transaction</a>
+        </div>
+      </div>
+
+      <!-- 4. Shipping Information Panel -->
+      <div class="info-panel">
+        <div class="panel-heading-row">
+          <h3 class="panel-heading m-0">Shipping Information</h3>
+          @if (o.unreadMessages) {
+            <div class="chat-badge-box">
+              <svg class="chat-icon-svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+              </svg>
+              <span class="chat-badge-count">{{ o.unreadMessages }}</span>
+            </div>
+          }
+        </div>
+        <table class="panel-table">
+          <tbody>
+            <tr>
+              <td class="col-label">Shipment ID</td>
+              <td class="col-value">{{ o.shipmentId || 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td class="col-label">Address</td>
+              <td class="col-value uppercase-address">{{ o.shippingAddressText || 'N/A' }}</td>
+            </tr>
+            <tr>
+              <td class="col-label">Box Dimensions</td>
+              <td class="col-value">
+                @if (o.boxDimensions) {
+                  <div class="box-dim-lines">
+                    <div>Length: {{ o.boxDimensions.length }}</div>
+                    <div>Width: {{ o.boxDimensions.width }}</div>
+                    <div>Height: {{ o.boxDimensions.height }}</div>
+                    <div>Weight: {{ o.boxDimensions.weight }}</div>
+                  </div>
+                } @else {
+                  <span>N/A</span>
+                }
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ITEM DETAILS SECTION -->
+    <div class="item-details-section">
+      <h2 class="section-heading">Item Details</h2>
+
+      <!-- Box Config & Dimensions Row -->
+      <div class="box-dimensions-row">
+        <!-- Select Box Custom Dropdown -->
+        <div class="box-select-container">
+          <div class="custom-select-box" (click)="toggleBoxDropdown()">
+            <label class="floating-label">Select Box</label>
+            <span class="selected-text">{{ selectedBox() }}</span>
+            <span class="dropdown-caret">▼</span>
+          </div>
+
+          <!-- Dropdown Options Menu (as seen in screenshot 2) -->
+          @if (isBoxDropdownOpen()) {
+            <div class="dropdown-menu-list">
+              @for (boxOption of boxOptions; track boxOption) {
+                <div
+                  class="dropdown-option-item"
+                  [class.active]="selectedBox() === boxOption"
+                  (click)="selectBoxOption(boxOption)"
+                >
+                  {{ boxOption }}
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Length Input -->
+        <div class="dim-input-group" [class.has-error]="showValidationErrors()">
+          <label class="dim-label">Length (in) {{ showValidationErrors() ? '*' : '' }}</label>
+          <input
+            type="number"
+            class="dim-input"
+            [ngModel]="boxLength()"
+            (ngModelChange)="boxLength.set($event)"
+          />
+          @if (showValidationErrors()) {
+            <span class="dim-error-msg">Length must be greater than 0</span>
+          }
+        </div>
+
+        <!-- Width Input -->
+        <div class="dim-input-group" [class.has-error]="showValidationErrors()">
+          <label class="dim-label">Width (in) {{ showValidationErrors() ? '*' : '' }}</label>
+          <input
+            type="number"
+            class="dim-input"
+            [ngModel]="boxWidth()"
+            (ngModelChange)="boxWidth.set($event)"
+          />
+          @if (showValidationErrors()) {
+            <span class="dim-error-msg">Width must be greater than 0</span>
+          }
+        </div>
+
+        <!-- Height Input -->
+        <div class="dim-input-group" [class.has-error]="showValidationErrors()">
+          <label class="dim-label">Height (in) {{ showValidationErrors() ? '*' : '' }}</label>
+          <input
+            type="number"
+            class="dim-input"
+            [ngModel]="boxHeight()"
+            (ngModelChange)="boxHeight.set($event)"
+          />
+          @if (showValidationErrors()) {
+            <span class="dim-error-msg">Height must be greater than 0</span>
+          }
+        </div>
+
+        <!-- Weight Input -->
+        <div class="dim-input-group" [class.has-error]="showValidationErrors()">
+          <label class="dim-label">Weight (lbs) {{ showValidationErrors() ? '*' : '' }}</label>
+          <input
+            type="number"
+            class="dim-input"
+            [ngModel]="boxWeight()"
+            (ngModelChange)="boxWeight.set($event)"
+          />
+          @if (showValidationErrors()) {
+            <span class="dim-error-msg">Weight must be greater than 0</span>
+          }
+        </div>
+      </div>
+
+      <!-- Items Table -->
+      <div class="items-table-wrapper">
+        <table class="items-grid-table">
+          <thead>
+            <tr>
+              <th class="th-num">#</th>
+              <th class="th-check">
+                <input type="checkbox" checked />
+              </th>
+              <th class="th-product">Product Name</th>
+              <th class="th-sku">SKU</th>
+              <th class="th-qty">Qty Ordered</th>
+              <th class="th-qty">Qty Picked</th>
+              <th class="th-qty">Qty Shipped</th>
+              <th class="th-qty">Label Printed For</th>
+              <th class="th-qty-shipping">Qty Shipping</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of o.items; track item.name; let i = $index) {
+              <tr class="item-row">
+                <td class="td-num">{{ i + 1 }}</td>
+                <td class="td-check">
+                  <input
+                    type="checkbox"
+                    [checked]="item.selected !== false"
+                    (change)="toggleItemSelection(item)"
+                  />
+                </td>
+                <td class="td-product text-red">
+                  {{ item.productName || item.name }}
+                </td>
+                <td class="td-sku text-red">
+                  {{ item.sku || '2008756' }}
+                </td>
+                <td class="td-qty">{{ item.qtyOrdered || item.quantity || 1 }}</td>
+                <td class="td-qty">{{ item.qtyPicked || item.quantity || 1 }}</td>
+                <td class="td-qty">{{ item.qtyShipped || 0 }}</td>
+                <td class="td-qty">{{ item.labelPrintedFor || 0 }}</td>
+                <td class="td-qty-shipping">
+                  <input
+                    type="number"
+                    class="qty-shipping-input"
+                    [value]="item.qtyShipping !== undefined ? item.qtyShipping : 1"
+                    (input)="item.qtyShipping = +$any($event.target).value"
+                  />
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Below Table Right Buttons -->
+      <div class="table-actions-row">
+        <button class="btn-outline-red" (click)="onPackingSlip()">Packing Slip</button>
+        <button
+          class="btn-outline-red"
+          [class.disabled-btn]="showValidationErrors()"
+          (click)="onVoidShipping()"
+        >
+          Void Shipping
+        </button>
+        @if (!showValidationErrors()) {
+          <button class="btn-outline-red" (click)="onReprintLabel()">Reprint Label</button>
+        }
+      </div>
+
+      <!-- Bottom Action Bar -->
+      <div class="bottom-action-bar">
+        <div class="bottom-left-action">
+          @if (o.canRefund) {
+            <button class="btn-void-order" (click)="onRefundOrder()">
+              <span class="void-x-icon">✖</span>
+              <span>Refund Order</span>
+            </button>
+          } @else {
+            <button class="btn-void-order" (click)="onVoidOrder()">
+              <span class="void-x-icon">✖</span>
+              <span>Void Order</span>
+            </button>
+          }
+        </div>
+
+        <div class="bottom-right-action">
+          <button
+            class="btn-ship"
+            [class.btn-ship-disabled]="showValidationErrors()"
+            (click)="onShip()"
+          >
+            SHIP
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

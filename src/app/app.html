@@ -1,1 +1,31 @@
-<router-outlet />
+<div class="app-layout">
+  <header class="navbar">
+    <div class="navbar-container">
+      <a class="navbar-brand" routerLink="/orders">
+        <div class="brand-logo">
+          <mat-icon>storefront</mat-icon>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">D&amp;B Supply</span>
+          <span class="brand-subtitle">Order Management Portal</span>
+        </div>
+      </a>
+
+      <!-- Navigation button deleted as requested -->
+
+      <div class="navbar-actions">
+        <button mat-icon-button class="nav-icon-btn" aria-label="Notifications">
+          <mat-icon>notifications_none</mat-icon>
+        </button>
+        <div class="user-profile">
+          <div class="avatar">DB</div>
+          <span class="user-name">Admin</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
