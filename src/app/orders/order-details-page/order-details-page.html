@@ -48,7 +48,9 @@
     <div class="info-panels-grid">
       <!-- 1. Billing Address Panel -->
       <div class="info-panel">
-        <h3 class="panel-heading">Billing Address</h3>
+        <div class="panel-header">
+          <h3 class="panel-heading">Billing Address</h3>
+        </div>
         <table class="panel-table">
           <tbody>
             <tr>
@@ -81,7 +83,9 @@
 
       <!-- 2. Order Information Panel -->
       <div class="info-panel">
-        <h3 class="panel-heading">Order Information</h3>
+        <div class="panel-header">
+          <h3 class="panel-heading">Order Information</h3>
+        </div>
         <table class="panel-table">
           <tbody>
             <tr>
@@ -120,18 +124,26 @@
 
       <!-- 3. Transactions Panel -->
       <div class="info-panel">
-        <h3 class="panel-heading">Transactions</h3>
+        <div class="panel-header">
+          <h3 class="panel-heading">Transactions</h3>
+        </div>
         <div class="transactions-list">
-          <a class="transaction-link" (click)="showToast('Opening Deposit Transaction details...')">Deposit Transaction</a>
-          <a class="transaction-link" (click)="showToast('Opening Sales Transaction details...')">Sales Transaction</a>
-          <a class="transaction-link" (click)="showToast('Opening Refund Deposit Transaction details...')">Refund Deposit Transaction</a>
+          <div class="transaction-item">
+            <a class="transaction-link" (click)="showToast('Opening Deposit Transaction details...')">Deposit Transaction</a>
+          </div>
+          <div class="transaction-item">
+            <a class="transaction-link" (click)="showToast('Opening Sales Transaction details...')">Sales Transaction</a>
+          </div>
+          <div class="transaction-item">
+            <a class="transaction-link" (click)="showToast('Opening Refund Deposit Transaction details...')">Refund Deposit Transaction</a>
+          </div>
         </div>
       </div>
 
       <!-- 4. Shipping Information Panel -->
       <div class="info-panel">
-        <div class="panel-heading-row">
-          <h3 class="panel-heading m-0">Shipping Information</h3>
+        <div class="panel-header panel-header-shipping">
+          <h3 class="panel-heading">Shipping Information</h3>
           @if (o.unreadMessages) {
             <div class="chat-badge-box">
               <svg class="chat-icon-svg" viewBox="0 0 24 24" fill="currentColor">

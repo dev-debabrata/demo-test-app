@@ -15,7 +15,7 @@
 /* TOP NAV CARD */
 .top-nav-card {
   background-color: #ffffff;
-  border: 1px solid #d9d9d9;
+  border: 1px solid #dcdcdc;
   border-radius: 4px;
   padding: 8px 16px;
   display: flex;
@@ -31,8 +31,8 @@
 }
 
 .order-icon-badge {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   background-color: #e68a00; /* Exact golden orange #E68A00 from reference */
   border-radius: 4px;
   display: flex;
@@ -43,31 +43,35 @@
 }
 
 .order-store-svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 }
 
 .order-number-heading {
   margin: 0;
-  font-size: 18px;
+  font-size: 21px; /* Increased text size as requested */
   font-weight: 700;
-  color: #111827;
-  letter-spacing: -0.2px;
+  color: #000000; /* Deep black text */
+  letter-spacing: -0.3px;
+  line-height: 1.1;
 }
 
 .status-packing-pill {
-  display: inline-block;
-  padding: 2px 14px;
-  background-color: #fdf2f8;
-  color: #c026d3;
-  border: 1px solid #f0abfc;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 12px;
+  background-color: #eed5e5; /* Exact lavender/magenta pill background */
+  color: #9d3d96;           /* Exact pill text color #9D3D96 */
+  border: 1px solid #c276ac; /* Exact pill border */
   border-radius: 14px;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 13px; /* Increased pill text size */
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .small-pill {
-  padding: 1px 10px;
+  padding: 2px 10px;
   font-size: 11px;
 }
 
@@ -79,73 +83,82 @@
 
 .nav-arrow-btn {
   background-color: #ffffff;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #d5d5d5;
   border-radius: 4px;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
-  font-weight: bold;
-  color: #4b5563;
+  font-size: 14px; /* Increased font size */
+  font-weight: 600;
+  color: #333333;
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: all 0.15s ease;
+  line-height: 1;
+  padding: 0;
 }
 
 .nav-arrow-btn:hover {
-  background-color: #f3f4f6;
+  background-color: #f5f5f5;
+  border-color: #c0c0c0;
 }
 
 .nav-back-btn {
   background-color: #ffffff;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #d5d5d5;
   border-radius: 4px;
-  height: 28px;
+  height: 32px;
   padding: 0 16px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #ed1c24; /* Exact red text #ED1C24 */
+  font-size: 13px; /* Increased font size */
+  font-weight: 600;
+  color: #ed222e; /* Exact red text #ED222E from reference image */
   cursor: pointer;
   transition: all 0.15s ease;
+  line-height: 30px;
 }
 
 .nav-back-btn:hover {
   background-color: #fef2f2;
+  border-color: #fca5a5;
 }
 
 /* 4-PANEL INFO GRID */
 .info-panels-grid {
   display: grid;
-  grid-template-columns: 1.25fr 1.25fr 1fr 1.25fr;
-  gap: 12px;
-  margin-top: 12px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+  align-items: stretch;
 }
 
 .info-panel {
   background-color: #ffffff;
   border: 1px solid #d9d9d9;
-  border-radius: 4px;
-  padding: 12px 14px;
+  border-radius: 0; /* Sharp square corners matching reference */
+  padding: 0; /* Edge to edge tables inside card */
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
 }
 
-.panel-heading {
-  margin: 0 0 10px 0;
-  font-size: 14px;
-  font-weight: 700;
-  color: #111827;
+.panel-header {
+  padding: 8px 10px 6px 10px;
 }
 
-.m-0 {
-  margin: 0;
-}
-
-.panel-heading-row {
+.panel-header-shipping {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  padding: 6px 10px 5px 10px;
+}
+
+.panel-heading {
+  margin: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1.2;
 }
 
 .chat-badge-box {
@@ -156,55 +169,65 @@
 }
 
 .chat-icon-svg {
-  width: 20px;
-  height: 20px;
-  color: #374151;
+  width: 18px;
+  height: 18px;
+  color: #1f2937;
 }
 
 .chat-badge-count {
   position: absolute;
-  top: -8px;
-  right: -8px;
-  background-color: #ed1c24;
+  top: -6px;
+  right: -6px;
+  background-color: #f44336;
   color: #ffffff;
   border-radius: 50%;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
-  width: 17px;
-  height: 17px;
+  min-width: 15px;
+  height: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid #ffffff;
 }
 
 .panel-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
-  border: 1px solid #e5e7eb;
+  font-size: 11.5px;
+  border-top: 1px solid #e0e0e0;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
 }
 
 .panel-table td {
-  padding: 5px 8px;
-  border: 1px solid #e5e7eb;
-  vertical-align: middle;
+  padding: 4px 8px;
+  border-bottom: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+  vertical-align: top;
+  line-height: 1.35;
+}
+
+.panel-table td:last-child {
+  border-right: none;
 }
 
 .col-label {
-  width: 44%;
+  width: 38%;
   color: #4b5563;
   font-weight: 500;
   background-color: #ffffff;
 }
 
 .col-value {
-  color: #111827;
+  color: #000000;
   font-weight: 400;
   background-color: #ffffff;
 }
 
 .email-value {
-  color: #111827;
+  color: #000000;
   word-break: break-all;
 }
 
@@ -219,25 +242,30 @@
 .box-dim-lines {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  line-height: 1.3;
+  gap: 1px;
+  line-height: 1.35;
 }
 
 /* TRANSACTIONS PANEL */
 .transactions-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding-top: 4px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.transaction-item {
+  padding: 5px 8px;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .transaction-link {
-  color: #ed1c24; /* Red transaction link #ED1C24 */
-  font-size: 13px;
-  font-weight: 500;
+  color: #ef3c48; /* Exact red from reference */
+  font-size: 11.5px;
+  font-weight: 400;
   cursor: pointer;
   text-decoration: none;
   transition: color 0.15s ease;
+  display: block;
 }
 
 .transaction-link:hover {

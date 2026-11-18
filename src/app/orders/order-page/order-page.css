@@ -344,12 +344,12 @@
 
 /* Packing Pill - Matches screenshot */
 .status-packing {
-  background-color: #fdf2f8;
-  color: #c026d3;
-  border: 1px solid #f0abfc;
+  background-color: #eed5e5;
+  color: #9d3d96;
+  border: 1px solid #c276ac;
 }
 .status-packing .status-dot {
-  background-color: #c026d3;
+  background-color: #9d3d96;
 }
 
 .status-delivered {
